@@ -24,8 +24,6 @@ type
     procedure btReverseClick(Sender: TObject);
     procedure btSomaClick(Sender: TObject);
   private
-  public
-    { Public declarations }
   end;
 
 var
