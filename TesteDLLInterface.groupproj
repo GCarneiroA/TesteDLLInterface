@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{B7706E83-116F-49A1-862D-A39F438790A0}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="DLLInterface\DLLInterface.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="App\App.dproj">
+            <Dependencies>DLLInterface\DLLInterface.dproj</Dependencies>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="DLLInterface">
+        <MSBuild Projects="DLLInterface\DLLInterface.dproj"/>
+    </Target>
+    <Target Name="DLLInterface:Clean">
+        <MSBuild Projects="DLLInterface\DLLInterface.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DLLInterface:Make">
+        <MSBuild Projects="DLLInterface\DLLInterface.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="App" DependsOnTargets="DLLInterface">
+        <MSBuild Projects="App\App.dproj"/>
+    </Target>
+    <Target Name="App:Clean" DependsOnTargets="DLLInterface:Clean">
+        <MSBuild Projects="App\App.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="App:Make" DependsOnTargets="DLLInterface:Make">
+        <MSBuild Projects="App\App.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="DLLInterface;App"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="DLLInterface:Clean;App:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="DLLInterface:Make;App:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
